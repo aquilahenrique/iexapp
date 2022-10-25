@@ -17,6 +17,9 @@ També só criei o teste para o usecase principal `SearchQuoteUseCase`.
 ## Clonar o repositório
 `git clone git@github.com:aquilahenrique/iexapp.git`
 
+## Entrar na pasta do projeto
+`cd iexapp`
+
 ## Instalar as dependências
 `docker run --rm \
 -u "$(id -u):$(id -g)" \
