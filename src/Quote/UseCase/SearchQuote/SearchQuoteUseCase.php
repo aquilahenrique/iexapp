@@ -27,6 +27,7 @@ class SearchQuoteUseCase implements UseCase
         if (empty($input->symbol)) {
             throw new InvalidInputException('empty symbol');
         }
+
         $quote = $this->quoteRepository->findBySymbol($input->symbol);
 
         if (!$quote) {
@@ -39,7 +40,8 @@ class SearchQuoteUseCase implements UseCase
 
         return new OutputSearchQuote([
             'companyName' => $quote['companyName'],
-            'latestPrice' => $quote['latestPrice']
+            'latestPrice' => $quote['latestPrice'],
+            'latestUpdate' => $quote['latestUpdate']
         ]);
     }
 
@@ -48,15 +50,17 @@ class SearchQuoteUseCase implements UseCase
         $quote = $this->stockIntegration->getQuoteBySymbol($symbol);
 
         if ($quote) {
-            $this->storeQuote($symbol, $quote['companyName'], $quote['latestPrice']);
+            $latestUpdate = (new \DateTime())->setTimestamp($quote['latestUpdate'] / 1000);
+            $this->storeQuote($symbol, $quote['companyName'], $quote['latestPrice'], $latestUpdate);
+            $quote['latestUpdate'] = $latestUpdate;
         }
 
         return $quote;
     }
 
-    private function storeQuote(string $symbol, string $companyName, float $latestPrice): void
+    private function storeQuote(string $symbol, string $companyName, float $latestPrice, \DateTime $latestUpdate): void
     {
-        $input = new InputStoreQuote($symbol, $companyName, $latestPrice);
+        $input = new InputStoreQuote($symbol, $companyName, $latestPrice, $latestUpdate);
         $this->storeQuoteUseCase->handle($input);
     }
 }

@@ -49,7 +49,8 @@ class SearchQuoteUseCaseTest extends TestCase
         $this->quoteRepository->shouldReceive('findBySymbol')
             ->andReturn([
                 'companyName' => 'Apple',
-                'latestPrice' => 140.99
+                'latestPrice' => 140.99,
+                'latestUpdate' => 1667565174000
             ]);
 
         $useCase = new SearchQuoteUseCase(
@@ -63,7 +64,8 @@ class SearchQuoteUseCaseTest extends TestCase
         $this->assertInstanceOf(OutputSearchQuote::class, $output);
         $this->assertEquals([
             'companyName' => 'Apple',
-            'latestPrice' => 140.99
+            'latestPrice' => 140.99,
+            'latestUpdate' => 1667565174000
         ], $output->getData());
     }
 
@@ -77,7 +79,8 @@ class SearchQuoteUseCaseTest extends TestCase
         $this->stockIntegration->shouldReceive('getQuoteBySymbol')
             ->andReturn([
                 'companyName' => 'Twitter',
-                'latestPrice' => 45.99
+                'latestPrice' => 45.99,
+                'latestUpdate' => 1667565174000
             ]);
 
         $this->storeQuoteUseCase->shouldReceive('handle')
@@ -94,7 +97,8 @@ class SearchQuoteUseCaseTest extends TestCase
         $this->assertInstanceOf(OutputSearchQuote::class, $output);
         $this->assertEquals([
             'companyName' => 'Twitter',
-            'latestPrice' => 45.99
+            'latestPrice' => 45.99,
+            'latestUpdate' => (new \DateTime())->setTimestamp(1667565174000/1000)
         ], $output->getData());
     }
 

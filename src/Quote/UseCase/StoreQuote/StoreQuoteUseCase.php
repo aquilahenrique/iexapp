@@ -30,12 +30,16 @@ class StoreQuoteUseCase implements UseCase
         if (empty($input->latestPrice)) {
             throw new InvalidInputException('empty latest price');
         }
+        if (empty($input->latestUpdate)) {
+            throw new InvalidInputException('empty latest update');
+        }
 
-        $quote = $this->quoteRepository->save($input->symbol, $input->companyName, $input->latestPrice);
+        $quote = $this->quoteRepository->save($input->symbol, $input->companyName, $input->latestPrice, $input->latestUpdate);
 
         return new OutputStoreQuote([
             'companyName' => $quote['companyName'],
-            'latestPrice' => $quote['latestPrice']
+            'latestPrice' => $quote['latestPrice'],
+            'latestUpdate' => $quote['latestUpdate'],
         ]);
     }
 }

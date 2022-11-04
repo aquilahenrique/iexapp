@@ -8,6 +8,6 @@ interface QuoteRepository
 {
     public function findBySymbol(string $symbol): ?array;
 
-    public function save(string $symbol, string $companyName, float $latestPrice): array;
+    public function save(string $symbol, string $companyName, float $latestPrice, \DateTime $latestUpdate): array;
 
 }

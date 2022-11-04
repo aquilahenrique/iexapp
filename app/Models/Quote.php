@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Quote extends Model
 {
+    protected $casts = [
+        'latest_update' => 'datetime'
+    ];
+
     use HasFactory;
 }
