@@ -6,7 +6,7 @@ da camada de Dominio melhor.
 
 Como camada de Infraestrutura, eu deixei a própria pasta do framework `app`.
 
-També só criei o teste para o usecase principal `SearchQuoteUseCase`.
+Também só criei o teste para o usecase principal `SearchQuoteUseCase`.
 
 # Requisitos
 
@@ -37,4 +37,7 @@ Esse comando vai baixar as imagens e iniciar os containers
 
 ## Acessar
 `http://localhost`
+
+## Executar teste unitário
+`./vendor/bin/sail phpunit`
 
